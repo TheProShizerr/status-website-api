@@ -96,7 +96,8 @@ export default function Home() {
 	const lengthVisible = () => {
 		if (windowSize >= 1024) return 40
 		if (windowSize >= 768) return 30
-		if (windowSize <= 768) return 20
+		if (windowSize <= 320) return 20
+		if (windowSize <= 768) return 25
 	}
 
 	useEffect(() => {
