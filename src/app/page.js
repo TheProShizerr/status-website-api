@@ -84,7 +84,7 @@ const StatusBox = () => {
 							<div
 								className="flex flex-col items-center w-full hover:bg-hover-color transition-colors px-4 py-2.5 rounded-lg"
 								key={index}>
-								<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col">
+								<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
 									<div className="max-lg:pb-5">
 										<div className="flex gap-2 items-center">
 											<Tooltip content="Aktywność strony">
@@ -124,7 +124,7 @@ const StatusBox = () => {
 			</div>
 
 			<h2 className="w-full max-lg:p-1 text-left text-xl mb-4 mt-10">API status</h2>
-			<div className="flex flex-col  bg-box rounded-lg w-full max-w-screen-xl p-2">
+			<div className="flex flex-col gap-5  bg-box rounded-lg w-full max-w-screen-xl p-2">
 				{data &&
 					Object.values(data)
 						.filter(item => item.type === "api")
@@ -132,17 +132,17 @@ const StatusBox = () => {
 							<div
 								className="flex flex-col items-center w-full hover:bg-hover-color transition-colors px-4 py-2.5 rounded-lg"
 								key={index}>
-								<div className="flex max-sm:flex-col gap-5  w-full justify-between items-center mb-1">
+								<div className="flex max-sm:flex-col gap-5  w-full justify-between items-center mb-1 max-sm:gap-0">
 									<div className="max-lg:pb-5">
-										<div className="flex gap-2 items-center">
+										<div className="flex gap-2 items-center w-full max-sm:justify-center">
 											<Tooltip content="Aktywność API">
 												<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
 											</Tooltip>
-											<a className="text-color-text underline" href={item.url}>
-												{item.url.split("https://")[1]}
+											<a className="text-color-text underline max-sm:truncate max-sm:w-[60%]" href={item.url}>
+												{item.url}
 											</a>
 										</div>
-										<div className="flex items-center gap-2">
+										<div className="flex items-center gap-2 max-sm:justify-center">
 											<p className="bg-green-700 px-3 text-[0.70rem] w-fit rounded-lg mt-1">https</p>
 											<p className="bg-green-700 px-3 text-[0.70rem] w-fit rounded-lg mt-1">api</p>
 											<p className="bg-purple-600 px-3 text-[0.70rem] w-fit rounded-lg mt-1">cdn</p>
@@ -176,10 +176,10 @@ const StatusBox = () => {
 const Header = () => {
 	return (
 		<>
-			<div className="flex items-center gap-3 bg-box p-6 rounded-lg my-10 max-w-screen-xl">
+			{/* <div className="flex items-center gap-3 bg-box p-6 rounded-lg my-10 max-w-screen-xl">
 				<span className="material-symbols-outlined text-4xl text-green-500">check_circle</span>
 				<p className="text-xl">Wszystkie nasze systemy działają poprawnie</p>
-			</div>
+			</div> */}
 		</>
 	)
 }
