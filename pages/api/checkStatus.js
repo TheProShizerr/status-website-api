@@ -76,6 +76,8 @@ export default async function handler(req, res) {
 
 			await prisma.status.create({ data })
 		} catch (err) {
+			console.log(`${site.url}, ${err}`)
+
 			data.url = site.url
 			data.type = site.url.includes("api") ? "api" : "web"
 			data.status = err.status.toString()
