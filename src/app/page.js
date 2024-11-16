@@ -4,15 +4,39 @@ import { useEffect, useState } from "react"
 import { Tooltip } from "@nextui-org/react"
 import Footer from "../components/Footer"
 
+const Header = ({ status }) => {
+	return (
+		<>
+			<div className="flex items-center max-sm:items-start gap-3 bg-box p-6 rounded-lg my-10 w-full">
+				<span className={`material-symbols-outlined text-4xl ${status ? "text-red-500" : "text-green-500"}`}>
+					{status ? "schedule" : "check_circle"}
+				</span>
+				<p className={`text-xl max-sm:text-lg ${status ? "text-red-500" : "text-green-500"}`}>
+					{status
+						? "Wystepuja chwilowe problemy w dzialaniu naszych systemow"
+						: "Wszystkie nasze systemy działają poprawnie"}
+				</p>
+			</div>
+		</>
+	)
+}
+
 const StatusBox = () => {
 	const [data, setData] = useState(null)
 	const [now, setNow] = useState(new Date())
 	const [windowSize, setWindowSize] = useState(undefined)
+	const [status, setStatus] = useState(false)
 
 	const loadData = async () => {
 		try {
 			const data = await fetch("/api/statusData")
 			const dataRes = await data.json()
+
+			const hasNon200Status = Object.values(dataRes).some(el => el.statusList[0].status !== 200)
+
+			if (hasNon200Status) {
+				setStatus(true)
+			}
 
 			setData(dataRes)
 		} catch (err) {
@@ -75,8 +99,9 @@ const StatusBox = () => {
 
 	return (
 		<>
-			<h2 className="w-full max-lg:p-1 text-left text-xl mb-4">Strony internetowe</h2>
-			<div className="flex flex-col gap-5 bg-box p-2 rounded-lg w-full  mx-auto">
+			<Header status={status} />
+			<h2 className="w-full text-left text-xl mb-4">Strony internetowe</h2>
+			<div className="flex flex-col gap-5 bg-box p-2 rounded-lg w-full ">
 				{data &&
 					Object.values(data)
 						.filter(item => item.type === "web")
@@ -123,8 +148,8 @@ const StatusBox = () => {
 						))}
 			</div>
 
-			<h2 className="w-full max-lg:p-1 text-left text-xl mb-4 mt-10">API status</h2>
-			<div className="flex flex-col gap-5  bg-box rounded-lg w-full max-w-screen-xl p-2">
+			<h2 className="w-full text-left text-xl mb-4 mt-10">API status</h2>
+			<div className="flex flex-col gap-5 bg-box p-2 rounded-lg w-full overflow-hidden ">
 				{data &&
 					Object.values(data)
 						.filter(item => item.type === "api")
@@ -132,7 +157,7 @@ const StatusBox = () => {
 							<div
 								className="flex flex-col items-center w-full hover:bg-hover-color transition-colors px-4 py-2.5 rounded-lg"
 								key={index}>
-								<div className="flex max-sm:flex-col gap-5  w-full justify-between items-center mb-1 max-sm:gap-0">
+								<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
 									<div className="max-lg:pb-5">
 										<div className="flex gap-2 items-center w-full max-sm:justify-center">
 											<Tooltip content="Aktywność API">
@@ -148,8 +173,8 @@ const StatusBox = () => {
 											<p className="bg-purple-600 px-3 text-[0.70rem] w-fit rounded-lg mt-1">cdn</p>
 										</div>
 									</div>
-									<div className="flex flex-col overflow-hidden">
-										<div className="flex gap-1 overflow-x-auto max-w-full">
+									<div className="flex flex-col overflow-x-auto">
+										<div className="flex gap-1 flex-wrap">
 											{Object.values(item.statusList)
 												.splice(0, lengthVisible())
 												.map((list, index) => (
@@ -173,22 +198,10 @@ const StatusBox = () => {
 	)
 }
 
-const Header = () => {
-	return (
-		<>
-			{/* <div className="flex items-center gap-3 bg-box p-6 rounded-lg my-10 max-w-screen-xl">
-				<span className="material-symbols-outlined text-4xl text-green-500">check_circle</span>
-				<p className="text-xl">Wszystkie nasze systemy działają poprawnie</p>
-			</div> */}
-		</>
-	)
-}
-
 export default function Home() {
 	return (
 		<>
-			<div className="max-w-screen-xl mx-auto p-2">
-				<Header />
+			<div className="max-w-screen-xl mx-auto w-full py-4 p-2">
 				<StatusBox />
 				<Footer />
 			</div>
