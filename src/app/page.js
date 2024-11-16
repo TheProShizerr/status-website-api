@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { Tooltip } from "@nextui-org/react"
 import Footer from "../components/Footer"
+import Loader from "../components/Loader"
 
 const Header = ({ status }) => {
 	return (
@@ -21,11 +22,12 @@ const Header = ({ status }) => {
 	)
 }
 
-const StatusBox = () => {
+export default function Home() {
 	const [data, setData] = useState(null)
 	const [now, setNow] = useState(new Date())
 	const [windowSize, setWindowSize] = useState(undefined)
 	const [status, setStatus] = useState(false)
+	const [loader, setLoader] = useState(true)
 
 	const loadData = async () => {
 		try {
@@ -59,6 +61,10 @@ const StatusBox = () => {
 	useEffect(() => {
 		loadData()
 	}, [])
+
+	useEffect(() => {
+		if (data) setLoader(false)
+	}, [data])
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -99,110 +105,102 @@ const StatusBox = () => {
 
 	return (
 		<>
-			<Header status={status} />
-			<h2 className="w-full text-left text-xl mb-4">Strony internetowe</h2>
-			<div className="flex flex-col gap-5 bg-box p-2 rounded-lg w-full ">
-				{data &&
-					Object.values(data)
-						.filter(item => item.type === "web")
-						.map((item, index) => (
-							<div
-								className="flex flex-col items-center w-full hover:bg-hover-color transition-colors px-4 py-2.5 rounded-lg"
-								key={index}>
-								<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
-									<div className="max-lg:pb-5">
-										<div className="flex gap-2 items-center">
-											<Tooltip content="Aktywność strony">
-												<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
-											</Tooltip>
-											<a className="text-color-text underline" href={item.url}>
-												{item.url}
-											</a>
+			<Loader status={loader} />
+			<div className={`max-w-screen-xl mx-auto w-full py-4 p-2 ${loader ? "hidden" : "block"}`}>
+				<Header status={status} />
+				<h2 className="w-full text-left text-xl mb-4">Strony internetowe</h2>
+				<div className="flex flex-col gap-5 bg-box p-2 rounded-lg w-full ">
+					{data &&
+						Object.values(data)
+							.filter(item => item.type === "web")
+							.map((item, index) => (
+								<div
+									className="flex flex-col items-center w-full hover:bg-hover-color transition-colors px-4 py-2.5 rounded-lg"
+									key={index}>
+									<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
+										<div className="max-lg:pb-5">
+											<div className="flex gap-2 items-center">
+												<Tooltip content="Aktywność strony">
+													<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
+												</Tooltip>
+												<a className="text-color-text underline" href={item.url}>
+													{item.url}
+												</a>
+											</div>
+											<div className="flex items-center gap-2">
+												<p className="bg-green-700 px-3 text-[0.70rem] w-fit rounded-lg mt-1">
+													Certyfikat wygasa za 50 dni
+												</p>
+												<p className="bg-purple-600 px-3 text-[0.70rem] w-fit rounded-lg mt-1">cdn</p>
+											</div>
 										</div>
-										<div className="flex items-center gap-2">
-											<p className="bg-green-700 px-3 text-[0.70rem] w-fit rounded-lg mt-1">
-												Certyfikat wygasa za 50 dni
-											</p>
-											<p className="bg-purple-600 px-3 text-[0.70rem] w-fit rounded-lg mt-1">cdn</p>
-										</div>
-									</div>
-									<div className="flex flex-col overflow-x-auto">
-										<div className="flex gap-1 flex-wrap">
-											{Object.values(item.statusList)
-												.splice(0, lengthVisible())
-												.map((list, index) => (
-													<Tooltip content={list.updateAt} key={index}>
-														<div
-															className={`w-2 h-6 rounded-lg ${list.status === 200 ? "bg-green-500" : "bg-red-500"}`}
-															key={index}></div>
-													</Tooltip>
-												))}
-										</div>
-										<div className="flex justify-between mt-1">
-											<p className="text-color-text text-sm">{getTimeDifference(item.statusList[0].updateAt)}</p>
-											<p className="text-color-text text-sm">{getTimeDifference(item.statusList[39].updateAt)}</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						))}
-			</div>
-
-			<h2 className="w-full text-left text-xl mb-4 mt-10">API status</h2>
-			<div className="flex flex-col gap-5 bg-box p-2 rounded-lg w-full overflow-hidden ">
-				{data &&
-					Object.values(data)
-						.filter(item => item.type === "api")
-						.map((item, index) => (
-							<div
-								className="flex flex-col items-center w-full hover:bg-hover-color transition-colors px-4 py-2.5 rounded-lg"
-								key={index}>
-								<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
-									<div className="max-lg:pb-5">
-										<div className="flex gap-2 items-center w-full max-sm:justify-center">
-											<Tooltip content="Aktywność API">
-												<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
-											</Tooltip>
-											<a className="text-color-text underline max-sm:truncate max-sm:w-[60%]" href={item.url}>
-												{item.url}
-											</a>
-										</div>
-										<div className="flex items-center gap-2 max-sm:justify-center">
-											<p className="bg-green-700 px-3 text-[0.70rem] w-fit rounded-lg mt-1">https</p>
-											<p className="bg-green-700 px-3 text-[0.70rem] w-fit rounded-lg mt-1">api</p>
-											<p className="bg-purple-600 px-3 text-[0.70rem] w-fit rounded-lg mt-1">cdn</p>
-										</div>
-									</div>
-									<div className="flex flex-col overflow-x-auto">
-										<div className="flex gap-1 flex-wrap">
-											{Object.values(item.statusList)
-												.splice(0, lengthVisible())
-												.map((list, index) => (
-													<Tooltip content={list.updateAt} key={index}>
-														<div
-															className={`w-2 h-6 rounded-lg ${list.status === 200 ? "bg-green-500" : "bg-red-500"}`}
-															key={index}></div>
-													</Tooltip>
-												))}
-										</div>
-										<div className="flex justify-between mt-1">
-											<p className="text-color-text text-sm">{getTimeDifference(item.statusList[0].updateAt)}</p>
-											<p className="text-color-text text-sm">{getTimeDifference(item.statusList[39].updateAt)}</p>
+										<div className="flex flex-col overflow-x-auto">
+											<div className="flex gap-1 flex-wrap">
+												{Object.values(item.statusList)
+													.splice(0, lengthVisible())
+													.map((list, index) => (
+														<Tooltip content={list.updateAt} key={index}>
+															<div
+																className={`w-2 h-6 rounded-lg ${list.status === 200 ? "bg-green-500" : "bg-red-500"}`}
+																key={index}></div>
+														</Tooltip>
+													))}
+											</div>
+											<div className="flex justify-between mt-1">
+												<p className="text-color-text text-sm">{getTimeDifference(item.statusList[0].updateAt)}</p>
+												<p className="text-color-text text-sm">{getTimeDifference(item.statusList[39].updateAt)}</p>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						))}
-			</div>
-		</>
-	)
-}
-
-export default function Home() {
-	return (
-		<>
-			<div className="max-w-screen-xl mx-auto w-full py-4 p-2">
-				<StatusBox />
+							))}
+				</div>
+				<h2 className="w-full text-left text-xl mb-4 mt-10">API status</h2>
+				<div className="flex flex-col gap-5 bg-box p-2 rounded-lg w-full overflow-hidden ">
+					{data &&
+						Object.values(data)
+							.filter(item => item.type === "api")
+							.map((item, index) => (
+								<div
+									className="flex flex-col items-center w-full hover:bg-hover-color transition-colors px-4 py-2.5 rounded-lg"
+									key={index}>
+									<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
+										<div className="max-lg:pb-5">
+											<div className="flex gap-2 items-center w-full max-sm:justify-center">
+												<Tooltip content="Aktywność API">
+													<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
+												</Tooltip>
+												<a className="text-color-text underline max-sm:truncate max-sm:w-[60%]" href={item.url}>
+													{item.url}
+												</a>
+											</div>
+											<div className="flex items-center gap-2 max-sm:justify-center">
+												<p className="bg-green-700 px-3 text-[0.70rem] w-fit rounded-lg mt-1">https</p>
+												<p className="bg-green-700 px-3 text-[0.70rem] w-fit rounded-lg mt-1">api</p>
+												<p className="bg-purple-600 px-3 text-[0.70rem] w-fit rounded-lg mt-1">cdn</p>
+											</div>
+										</div>
+										<div className="flex flex-col overflow-x-auto">
+											<div className="flex gap-1 flex-wrap">
+												{Object.values(item.statusList)
+													.splice(0, lengthVisible())
+													.map((list, index) => (
+														<Tooltip content={list.updateAt} key={index}>
+															<div
+																className={`w-2 h-6 rounded-lg ${list.status === 200 ? "bg-green-500" : "bg-red-500"}`}
+																key={index}></div>
+														</Tooltip>
+													))}
+											</div>
+											<div className="flex justify-between mt-1">
+												<p className="text-color-text text-sm">{getTimeDifference(item.statusList[0].updateAt)}</p>
+												<p className="text-color-text text-sm">{getTimeDifference(item.statusList[39].updateAt)}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+							))}
+				</div>
 				<Footer />
 			</div>
 		</>
