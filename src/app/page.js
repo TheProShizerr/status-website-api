@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Tooltip } from "@nextui-org/react"
+import Footer from "../components/Footer"
 
 const StatusBox = () => {
 	const [data, setData] = useState(null)
@@ -189,6 +190,7 @@ export default function Home() {
 			<div className="max-w-screen-xl mx-auto p-2">
 				<Header />
 				<StatusBox />
+				<Footer />
 			</div>
 		</>
 	)
