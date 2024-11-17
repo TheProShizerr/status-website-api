@@ -83,7 +83,7 @@ export default function Home() {
 
 		const differenceInMinutes = Math.floor((now - lastScanDate) / (1000 * 60))
 
-		if (differenceInMinutes == 0) {
+		if (differenceInMinutes == 0 || differenceInMinutes < 0) {
 			return `Teraz`
 		} else if (differenceInMinutes < 60) {
 			return `${differenceInMinutes} min temu`
