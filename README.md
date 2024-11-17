@@ -24,3 +24,7 @@ Status Monitor to aplikacja do monitorowania dostępności stron internetowych i
    ```bash
    git clone https://github.com/TheProShizerr/status-website-api
    ```
+
+## 🌐 Link do strony
+
+🔗 [Odwiedź stronę Status](https://status.shizeclone.eu)
