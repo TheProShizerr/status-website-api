@@ -12,5 +12,6 @@ model Status {
   url      String?
   type     String
   status   String
+  timeResponse String?
   updateAt DateTime @default(now())
 }

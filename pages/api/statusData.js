@@ -50,6 +50,7 @@ export default async function handler(req, res) {
 				updateAt: new Date(item.updateAt).toLocaleString("pl-PL", {
 					timeZone: "Europe/Warsaw",
 				}),
+				timeResponse: parseInt(item.timeResponse),
 			})),
 		}
 	}

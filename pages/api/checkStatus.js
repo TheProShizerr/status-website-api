@@ -63,6 +63,8 @@ const data = {}
 export default async function handler(req, res) {
 	for (const site of website) {
 		try {
+			const dateBefore = new Date()
+
 			const checkStatus = await axios({
 				method: site.method,
 				url: site.url,
@@ -70,14 +72,17 @@ export default async function handler(req, res) {
 				data: site.data,
 			})
 
+			const dateAfter = new Date()
+
+			const dateSum = dateAfter.getTime() - dateBefore.getTime()
+
 			data.url = site.url
 			data.type = site.url.includes("api") ? "api" : "web"
 			data.status = checkStatus.status.toString()
+			data.timeResponse = dateSum.toString()
 
 			await prisma.status.create({ data })
 		} catch (err) {
-			console.log(`${site.url}, ${err}`)
-
 			data.url = site.url
 			data.type = site.url.includes("api") ? "api" : "web"
 			data.status = err.status.toString()

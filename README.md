@@ -4,7 +4,7 @@ Status Monitor to aplikacja do monitorowania dostępności stron internetowych i
 
 ## 🛠️ Funkcjonalności
 
-- **📊 Monitoring stron internetowych** – sprawdzanie statusu certyfikatów SSL oraz dostępności stron.
+- **📊 Monitoring stron internetowych** – sprawdzanie statusu dostępności stron.
 - **🛡️ Monitoring API** – śledzenie poprawności odpowiedzi API w różnych endpointach.
 - **⏱️ Automatyczna aktualizacja** – dane są odświeżane co 5 minut.
 - **📈 Intuicyjny interfejs** – czytelny widok statusu z wizualizacją historyczną.

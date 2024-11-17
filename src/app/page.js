@@ -130,7 +130,7 @@ export default function Home() {
 											</div>
 											<div className="flex items-center gap-2">
 												<p className="bg-green-700 px-3 text-[0.70rem] w-fit rounded-lg mt-1">
-													Certyfikat wygasa za 50 dni
+													właściciel TheProShizer
 												</p>
 												<p className="bg-purple-600 px-3 text-[0.70rem] w-fit rounded-lg mt-1">cdn</p>
 											</div>
@@ -140,7 +140,17 @@ export default function Home() {
 												{Object.values(item.statusList)
 													.splice(0, lengthVisible())
 													.map((list, index) => (
-														<Tooltip content={list.updateAt} key={index}>
+														<Tooltip
+															content={
+																<div className="py-2 bg-hover-color p-1 px-2 rounded-t-lg">
+																	<div className="text-small font-bold">{list.updateAt}</div>
+																	<div className="text-tiny">
+																		Czas odpowiedzi: {list.timeResponse && list.timeResponse}ms
+																	</div>
+																</div>
+															}
+															delay={500}
+															key={index}>
 															<div
 																className={`w-2 h-6 rounded-lg ${list.status === 200 ? "bg-green-500" : "bg-red-500"}`}
 																key={index}></div>
@@ -186,7 +196,17 @@ export default function Home() {
 												{Object.values(item.statusList)
 													.splice(0, lengthVisible())
 													.map((list, index) => (
-														<Tooltip content={list.updateAt} key={index}>
+														<Tooltip
+															content={
+																<div className="py-2 bg-hover-color p-1 px-2 rounded-t-lg">
+																	<div className="text-small font-bold">{list.updateAt}</div>
+																	<div className="text-tiny">
+																		Czas odpowiedzi: {list.timeResponse && list.timeResponse}ms
+																	</div>
+																</div>
+															}
+															delay={500}
+															key={index}>
 															<div
 																className={`w-2 h-6 rounded-lg ${list.status === 200 ? "bg-green-500" : "bg-red-500"}`}
 																key={index}></div>
