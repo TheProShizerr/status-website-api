@@ -182,7 +182,7 @@ export default function Home() {
 													<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
 												</Tooltip>
 												<a className="text-color-text underline max-sm:truncate max-sm:w-[60%]" href={item.url}>
-													{item.url}
+													{item.url.split("https://")[1]}
 												</a>
 											</div>
 											<div className="flex items-center gap-2 max-sm:justify-center">
