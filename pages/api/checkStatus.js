@@ -73,7 +73,7 @@ export default async function handler(req, res) {
 			where: { date: todayDate },
 		})
 
-		if (!incidentId) return
+		if (!incidentId) await prisma.dateIncidents.create({ data: { date: todayDate } })
 
 		await prisma.incidentsList.create({
 			data: {
