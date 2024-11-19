@@ -31,7 +31,7 @@ const Incidents = () => {
 			const response = await data.json()
 
 			console.log(response)
-			setData(response.reverse())
+			setData(response)
 		} catch (err) {
 			console.log(err)
 		}
