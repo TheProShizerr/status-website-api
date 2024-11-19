@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import { Tooltip } from "@nextui-org/react"
-import { Select, SelectItem } from "@nextui-org/react"
 import Footer from "../components/Footer"
 import Loader from "../components/Loader"
 
@@ -171,7 +170,7 @@ export default function Home() {
 									<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
 										<div className="max-lg:pb-5">
 											<div className="flex gap-2 items-center">
-												<Tooltip content="Aktywność ostatnie 24h">
+												<Tooltip className="bg-hover-color" content="Aktywność ostatnie 24h">
 													<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
 												</Tooltip>
 												<a className="text-color-text underline" href={item.url}>
@@ -191,10 +190,11 @@ export default function Home() {
 													.splice(0, lengthVisible())
 													.map((list, index) => (
 														<Tooltip
+															className="bg-hover-color"
 															content={
-																<div className="py-2 bg-hover-color p-1 px-2 rounded-t-lg">
-																	<div className="text-small font-bold">{list.updateAt}</div>
-																	<div className="text-tiny">
+																<div className="py-2  p-1 px-2 rounded-t-lg">
+																	<div className="text-base font-bold">{list.updateAt}</div>
+																	<div className="text-sm">
 																		Czas odpowiedzi: {list.timeResponse && list.timeResponse}ms
 																	</div>
 																</div>
@@ -228,7 +228,7 @@ export default function Home() {
 									<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
 										<div className="max-lg:pb-5">
 											<div className="flex gap-2 items-center w-full max-sm:justify-center">
-												<Tooltip content="Aktywność ostatnie 24h">
+												<Tooltip className="bg-hover-color" content="Aktywność ostatnie 24h">
 													<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
 												</Tooltip>
 												<a className="text-color-text underline max-sm:truncate max-sm:w-[60%]" href={item.url}>
@@ -247,10 +247,11 @@ export default function Home() {
 													.splice(0, lengthVisible())
 													.map((list, index) => (
 														<Tooltip
+															className="bg-hover-color"
 															content={
-																<div className="py-2 bg-hover-color p-1 px-2 rounded-t-lg">
-																	<div className="text-small font-bold">{list.updateAt}</div>
-																	<div className="text-tiny">
+																<div className="py-2  p-1 px-2 rounded-t-lg">
+																	<div className="text-base font-bold">{list.updateAt}</div>
+																	<div className="text-sm">
 																		Czas odpowiedzi: {list.timeResponse && list.timeResponse}ms
 																	</div>
 																</div>
