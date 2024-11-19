@@ -13,8 +13,16 @@ const website = [
 
 export default async function handler(req, res) {
 	const result = {}
+	const startOfDay = new Date()
+	startOfDay.setUTCHours(0, 0, 0, 0)
+
+	const endOfDay = new Date()
+	endOfDay.setUTCHours(23, 59, 59, 999)
 
 	for (const site of website) {
+		let succes = 0
+		let notSucces = 0
+
 		const read = await prisma.status.findMany({
 			where: {
 				url: site,
@@ -25,10 +33,16 @@ export default async function handler(req, res) {
 			take: 40,
 		})
 
-		let succes = 0
-		let notSucces = 0
+		const todayData = await prisma.status.findMany({
+			where: {
+				updateAt: {
+					gte: startOfDay,
+					lte: endOfDay,
+				},
+			},
+		})
 
-		read.forEach(item => {
+		todayData.forEach(item => {
 			const status = parseInt(item.status)
 			if (status == 200) {
 				succes++
@@ -37,13 +51,12 @@ export default async function handler(req, res) {
 			}
 		})
 
-		const websiteActive = (succes / 40) * 100
-
+		const websiteActive = (succes / todayData.length) * 100
 		const type = site.includes("api") ? "api" : "web"
 
 		result[site] = {
 			url: site,
-			active: websiteActive,
+			active: Math.round(websiteActive),
 			type: type,
 			statusList: read.map(item => ({
 				status: parseInt(item.status),

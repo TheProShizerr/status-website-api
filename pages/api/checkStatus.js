@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 import axios from "axios"
+import { stat } from "fs"
 
 const prisma = new PrismaClient({})
 
@@ -61,6 +62,31 @@ const website = [
 const data = {}
 
 export default async function handler(req, res) {
+	const addIncident = async (site, code, status) => {
+		const todayDate = new Date()
+			.toLocaleString("pl-PL", {
+				timeZone: "Europe/Warsaw",
+			})
+			.split(",")[0]
+
+		const incidentId = await prisma.dateIncidents.findMany({
+			where: { date: todayDate },
+		})
+
+		if (!incidentId) return
+
+		await prisma.incidentsList.create({
+			data: {
+				url: site,
+				type: site.includes("api") ? "api" : "web",
+				status: status,
+				description: code,
+				date: new Date(),
+				dateIncidentId: incidentId[0].id,
+			},
+		})
+	}
+
 	for (const site of website) {
 		try {
 			const dateBefore = new Date()
@@ -88,6 +114,8 @@ export default async function handler(req, res) {
 			data.status = err.status.toString()
 
 			await prisma.status.create({ data })
+
+			addIncident(site.url, err.code, err.status.toString())
 		}
 	}
 

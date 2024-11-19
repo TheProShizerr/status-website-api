@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Tooltip } from "@nextui-org/react"
+import { Select, SelectItem } from "@nextui-org/react"
 import Footer from "../components/Footer"
 import Loader from "../components/Loader"
 
@@ -17,6 +18,55 @@ const Header = ({ status }) => {
 						? "Wystepuja chwilowe problemy w dzialaniu naszych systemow"
 						: "Wszystkie nasze systemy działają poprawnie"}
 				</p>
+			</div>
+		</>
+	)
+}
+
+const Incidents = () => {
+	const [data, setData] = useState(null)
+
+	const loadData = async () => {
+		try {
+			const data = await fetch("/api/checkIncidents")
+			const response = await data.json()
+
+			console.log(response)
+			setData(response.reverse())
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	useEffect(() => {
+		loadData()
+	}, [])
+
+	return (
+		<>
+			<div className="mt-10">
+				<h2 className="uppercase text-xs font-bold">Incydenty które miały miejsce</h2>
+				{data &&
+					data.map((incident, index) => (
+						<div className="my-2" key={index}>
+							<p className="text-lg font-bold mt-10">{incident.date}</p>
+							<div className="w-full h-0.5 bg-[#12161d] mt-2"></div>
+							<p className={`${incident.incidentsList.length === 0 ? "block" : "hidden"} mt-2 text-color-text`}>
+								Nasz system nie odnotował incydentu dla tego dnia.
+							</p>
+							{incident.incidentsList.slice(0, 3).map(item => (
+								<div key={item.id} className="max-md:my-3">
+									<p className="mt-2 text-color-text text-base">
+										<span className="font-bold">ERROR - </span>
+										{item.description} ({item.status}), {item.url},
+									</p>
+									<p className="text-[0.80rem] mt-1">
+										Data: {new Date(item.date).toLocaleString("pl-PL", { timeZone: "Europe/Warsaw" })}
+									</p>
+								</div>
+							))}
+						</div>
+					))}
 			</div>
 		</>
 	)
@@ -121,7 +171,7 @@ export default function Home() {
 									<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
 										<div className="max-lg:pb-5">
 											<div className="flex gap-2 items-center">
-												<Tooltip content="Aktywność strony">
+												<Tooltip content="Aktywność ostatnie 24h">
 													<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
 												</Tooltip>
 												<a className="text-color-text underline" href={item.url}>
@@ -178,7 +228,7 @@ export default function Home() {
 									<div className="flex gap-5 w-full justify-between items-center mb-1 max-sm:flex-col max-sm:gap-0">
 										<div className="max-lg:pb-5">
 											<div className="flex gap-2 items-center w-full max-sm:justify-center">
-												<Tooltip content="Aktywność API">
+												<Tooltip content="Aktywność ostatnie 24h">
 													<p className="bg-green-500 px-3 rounded-lg text-black text-sm">{item.active}%</p>
 												</Tooltip>
 												<a className="text-color-text underline max-sm:truncate max-sm:w-[60%]" href={item.url}>
@@ -222,6 +272,7 @@ export default function Home() {
 								</div>
 							))}
 				</div>
+				<Incidents />
 				<Footer />
 			</div>
 		</>

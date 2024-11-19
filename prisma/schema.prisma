@@ -8,10 +8,28 @@ datasource db {
 }
 
 model Status {
-  id       Int      @id @default(autoincrement())
-  url      String?
-  type     String
-  status   String
+  id           Int      @id @default(autoincrement())
+  url          String?
+  type         String
+  status       String
   timeResponse String?
-  updateAt DateTime @default(now())
+  updateAt     DateTime @default(now())
+}
+
+model DateIncidents {
+  id            Int             @id @default(autoincrement())
+  date          String
+  dateSystem    DateTime @default(now())
+  incidentsList IncidentsList[]
+}
+
+model IncidentsList {
+  id             Int           @id @default(autoincrement())
+  url            String
+  type           String
+  status         String
+  description    String
+  date           DateTime      @default(now())
+  dateIncidentId Int
+  dateIncident   DateIncidents @relation(fields: [dateIncidentId], references: [id])
 }

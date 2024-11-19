@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "DateIncidents" ADD COLUMN     "dateSystem" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
