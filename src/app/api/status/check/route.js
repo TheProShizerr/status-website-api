@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 import axios from "axios"
-import { stat } from "fs"
 
-const prisma = new PrismaClient({})
 
 const website = [
 	{
@@ -61,7 +59,7 @@ const website = [
 
 const data = {}
 
-export default async function handler(req, res) {
+export async function GET(request) {
 	const addIncident = async (site, code, status) => {
 		const todayDate = new Date()
 			.toLocaleString("pl-PL", {
@@ -119,5 +117,5 @@ export default async function handler(req, res) {
 		}
 	}
 
-	res.status(200).json({ message: "Wszystkie strony zostały przeskanowane" })
+	return new Response("Wszystkie strony zostaly przeskanowane")
 }

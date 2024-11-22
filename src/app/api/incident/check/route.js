@@ -1,10 +1,6 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from "@/lib/prisma"
 
-const prisma = new PrismaClient({})
-
-export default async function handler(req, res) {
-	if (req.method != "GET") return
-
+export async function GET(request) {
 	try {
 		const todayDate = new Date()
 			.toLocaleString("pl-PL", {
@@ -17,15 +13,14 @@ export default async function handler(req, res) {
 		})
 
 		if (search) {
-			res.status(200).json({ message: "Data juz taka isntieje" })
-			return
+			return new Response("Data juz taka istnieje", { status: 200 })
 		}
 
 		await prisma.dateIncidents.create({
 			data: { date: todayDate },
 		})
 
-		res.status(200).json({ message: "Stworzno date dla nowego dnia" })
+		return new Response("Stworzno date dla nowego dnia", { status: 201 })
 	} catch (err) {
 		console.log(err)
 	}
