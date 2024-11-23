@@ -1,3 +1,5 @@
+export const revalidate = "no-store"
+
 import prisma from "@/lib/prisma"
 import ClientStatus from "./ClientStatus"
 import { website } from "@/utils/website"
