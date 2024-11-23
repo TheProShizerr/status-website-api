@@ -2,6 +2,7 @@
 CREATE TABLE "DateIncidents" (
     "id" SERIAL NOT NULL,
     "date" TEXT NOT NULL,
+    "dateSystem" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "DateIncidents_pkey" PRIMARY KEY ("id")
 );
@@ -11,6 +12,7 @@ CREATE TABLE "IncidentsList" (
     "id" SERIAL NOT NULL,
     "url" TEXT NOT NULL,
     "type" TEXT NOT NULL,
+    "status" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "dateIncidentId" INTEGER NOT NULL,

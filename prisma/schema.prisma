@@ -31,5 +31,5 @@ model IncidentsList {
   description    String
   date           DateTime      @default(now())
   dateIncidentId Int
-  dateIncident   DateIncidents @relation(fields: [dateIncidentId], references: [id])
+  dateIncident   DateIncidents @relation(fields: [dateIncidentId], references: [id], onDelete: Cascade)
 }
