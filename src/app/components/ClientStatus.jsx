@@ -31,7 +31,7 @@ export default function Home({ result, systemStatus }) {
 
 	const loadData = async () => {
 		try {
-			const data = await fetch("/api/status/return")
+			const data = await fetch("/api/status/return", { cache: "no-store" })
 			const dataRes = await data.json()
 
 			const hasNon200Status = Object.values(dataRes).some(el => el.statusList[0].status !== 200)

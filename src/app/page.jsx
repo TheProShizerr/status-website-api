@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import Footer from "./components/Footer"
 import ServerLoadIncidents from "./components/ServerLoadIncidents"
 import ServerLoadStatus from "./components/ServerLoadStatus"
