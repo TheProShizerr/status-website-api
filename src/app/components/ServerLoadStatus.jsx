@@ -1,5 +1,5 @@
-export const revalidate = 60
-export const fetchCache = "no-store"
+export const dynamic = "force-dynamic"
+export const fetchCache = "force-no-store"
 
 import prisma from "@/lib/prisma"
 import ClientStatus from "./ClientStatus"
@@ -41,14 +41,15 @@ export default async function ServerLoadStatus() {
 	}, {})
 
 	const groupedActive = website.reduce((acc, site) => {
-		const filtedStatuses = todayStatuses.filter(el => el.url === site)
+		const filteredStatuses = todayStatuses.filter(el => el.url === site)
 
 		acc[site] = {
-			success: filtedStatuses.filter(el => el.status == 200).length,
-			length: filtedStatuses.length,
+			success: filteredStatuses.filter(el => el.status == 200).length,
+			length: filteredStatuses.length,
 		}
 		return acc
 	}, {})
+
 	for (const site of website) {
 		const readyGroup = groupedStatuses[site]
 		const readyActive = groupedActive[site]
