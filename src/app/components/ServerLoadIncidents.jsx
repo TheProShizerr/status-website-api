@@ -1,4 +1,3 @@
-export const revalidate = "no-store"
 import prisma from "@/lib/prisma"
 
 export default async function ServerLoadIncidents() {

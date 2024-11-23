@@ -1,5 +1,4 @@
 export default function Loader({ status }) {
-	console.log(status)
 	return (
 		<>
 			<div
