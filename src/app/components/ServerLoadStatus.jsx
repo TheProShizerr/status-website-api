@@ -1,3 +1,6 @@
+export const revalidate = 60
+export const fetchCache = "no-store"
+
 import prisma from "@/lib/prisma"
 import ClientStatus from "./ClientStatus"
 import { website } from "@/utils/website"
