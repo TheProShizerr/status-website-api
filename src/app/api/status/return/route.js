@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma"
+import { formatedData } from "@/utils/formatedData"
 import { website } from "@/utils/website"
 
 export async function GET(request) {
@@ -60,9 +61,7 @@ export async function GET(request) {
 				type: type,
 				statusList: readyGroup.map(item => ({
 					status: parseInt(item.status),
-					updateAt: new Date(item.updateAt).toLocaleString("pl-PL", {
-						timeZone: "Europe/Warsaw",
-					}),
+					updateAt: formatedData(item.updateAt),
 					timeResponse: parseInt(item.timeResponse),
 				})),
 			}
