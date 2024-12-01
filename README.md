@@ -8,7 +8,6 @@ Status Monitor to aplikacja do monitorowania dostępności stron internetowych i
 - **🛡️ Monitoring API** – śledzenie poprawności odpowiedzi API w różnych endpointach.
 - **⏱️ Automatyczna aktualizacja** – dane są odświeżane co 5 minut.
 - **📈 Intuicyjny interfejs** – czytelny widok statusu z wizualizacją historyczną. Pokazuje historię z ostatnich 3h oraz zestawienie % z ostatnich 24h.
-- **🔔 Przypomnienie o ważności certyfikatów SSL** – pokazuje, ile dni zostało do wygaśnięcia certyfikatu.
 - **🖥️ Monitorowanie zdarzeń** - Jeśli jakiś system przestanie działac zostaje odnotowany incydent i pokazuje go na stronie, pokazuje ostatnie 5dni.
 - **❌ Automatyczne kasowanie danych** - Jeśli dane ze statusami są starsze niż 2 dni lub jest więcej niz 5 incydentów (1 dzien = 1 incydent) są automatycznie kasowane z bazy danych.
 
