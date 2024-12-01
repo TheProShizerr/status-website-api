@@ -78,6 +78,8 @@ export default function Home({ result, systemStatus }) {
 			return `${differenceInMinutes} min temu`
 		} else {
 			const hours = Math.floor(differenceInMinutes / 60)
+
+			console.log(differenceInMinutes)
 			return `${hours}h temu`
 		}
 	}

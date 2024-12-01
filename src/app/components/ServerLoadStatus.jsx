@@ -4,6 +4,7 @@ export const fetchCache = "force-no-store"
 import prisma from "@/lib/prisma"
 import ClientStatus from "./ClientStatus"
 import { website } from "@/utils/website"
+import { formatedData } from "@/utils/formatedData"
 
 export default async function ServerLoadStatus() {
 	const result = {}
@@ -63,15 +64,7 @@ export default async function ServerLoadStatus() {
 			type: type,
 			statusList: readyGroup.map(item => ({
 				status: parseInt(item.status),
-				updateAt: new Date(item.updateAt).toLocaleString("pl-PL", {
-					month: "2-digit",
-					year: "numeric",
-					day: "2-digit",
-					hour: "2-digit",
-					minute: "2-digit",
-					second: "2-digit",
-					timeZone: "Europe/Warsaw",
-				}),
+				updateAt: formatedData(item.updateAt),
 				timeResponse: parseInt(item.timeResponse),
 			})),
 		}

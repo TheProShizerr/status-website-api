@@ -1,5 +1,6 @@
 "use client"
 
+import { formatedData } from "@/utils/formatedData"
 import { useState } from "react"
 
 export default function ClientIncidents({ data }) {
@@ -39,9 +40,7 @@ export default function ClientIncidents({ data }) {
 										<span className="font-bold">ERROR - </span>
 										{item.description} ({item.status}), {item.url},
 									</p>
-									<p className="text-[0.80rem] mt-1">
-										Data: {new Date(item.date).toLocaleString("pl-PL", { timeZone: "Europe/Warsaw" })}
-									</p>
+									<p className="text-[0.80rem] mt-1">Data: {formatedData(item.date)}</p>
 								</div>
 							))}
 					</div>
