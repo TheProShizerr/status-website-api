@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma"
 import axios from "axios"
 
-
 const website = [
 	{
 		url: "https://szablonydiscord.pl",
@@ -61,11 +60,11 @@ const data = {}
 
 export async function GET(request) {
 	const addIncident = async (site, code, status) => {
-		const todayDate = new Date()
-			.toLocaleString("pl-PL", {
-				timeZone: "Europe/Warsaw",
-			})
-			.split(",")[0]
+		const todayDate = new Intl.DateTimeFormat("pl-PL", {
+			month: "2-digit",
+			year: "numeric",
+			day: "2-digit",
+		}).format(new Date())
 
 		const incidentId = await prisma.dateIncidents.findMany({
 			where: { date: todayDate },

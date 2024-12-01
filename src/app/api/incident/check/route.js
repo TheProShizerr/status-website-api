@@ -2,11 +2,11 @@ import prisma from "@/lib/prisma"
 
 export async function GET(request) {
 	try {
-		const todayDate = new Date()
-			.toLocaleString("pl-PL", {
-				timeZone: "Europe/Warsaw",
-			})
-			.split(",")[0]
+		const todayDate = new Intl.DateTimeFormat("pl-PL", {
+			month: "2-digit",
+			year: "numeric",
+			day: "2-digit",
+		}).format(new Date())
 
 		const search = await prisma.dateIncidents.findFirst({
 			where: { date: todayDate },
@@ -22,6 +22,6 @@ export async function GET(request) {
 
 		return new Response("Stworzno date dla nowego dnia", { status: 201 })
 	} catch (err) {
-		console.log(err)
+		return new Response(JSON.stringify({ error: "Wystapil blad", errorDetails: err.message }))
 	}
 }

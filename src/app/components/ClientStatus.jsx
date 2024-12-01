@@ -26,19 +26,12 @@ export default function Home({ result, systemStatus }) {
 	const [data, setData] = useState(result)
 	const [now, setNow] = useState(new Date())
 	const [windowSize, setWindowSize] = useState(undefined)
-	const [status, setStatus] = useState(false)
 	const [loader, setLoader] = useState(true)
 
 	const loadData = async () => {
 		try {
 			const data = await fetch("/api/status/return", { cache: "no-store" })
 			const dataRes = await data.json()
-
-			const hasNon200Status = Object.values(dataRes).some(el => el.statusList[0].status !== 200)
-
-			if (hasNon200Status) {
-				setStatus(true)
-			}
 
 			setData(dataRes)
 		} catch (err) {
