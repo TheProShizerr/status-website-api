@@ -1,6 +1,7 @@
 "use client"
 
 import { formatedData } from "@/utils/formatedData"
+import { Tooltip } from "@nextui-org/tooltip"
 import { useState } from "react"
 
 export default function ClientIncidents({ data }) {
@@ -31,18 +32,19 @@ export default function ClientIncidents({ data }) {
 						<p className={`${incident.incidentsList.length === 0 ? "block" : "hidden"} mt-2 text-color-text`}>
 							Nasz system nie odnotował incydentu dla tego dnia.
 						</p>
-						{incident.incidentsList
-							.slice(0, visible[incident.date] ? incident.incidentsList.length : 3)
-							.reverse()
-							.map(item => (
-								<div key={item.id} className="max-md:my-3">
-									<p className="mt-2 text-color-text text-base">
-										<span className="font-bold">ERROR - </span>
-										{item.description} ({item.status}), {item.url},
-									</p>
-									<p className="text-[0.80rem] mt-1">Data: {formatedData(item.date)}</p>
-								</div>
-							))}
+						{incident.incidentsList.slice(0, visible[incident.date] ? incident.incidentsList.length : 3).map(item => (
+							<div key={item.id} className="max-md:my-3">
+								<p className="mt-2 text-color-text text-base">
+									<Tooltip
+										className="bg-hover-color"
+										content={`Ostatnia aktualizacja: ${!item.errStatusUpdate ? "brak danych" : item.errStatusUpdate}`}>
+										<span className="font-bold uppercase">{item.errStatus == null ? "error" : item.errStatus} - </span>
+									</Tooltip>
+									{item.description} ({item.status}), {item.url},
+								</p>
+								<p className="text-[0.80rem] mt-1">Data: {formatedData(item.date)}</p>
+							</div>
+						))}
 					</div>
 				))}
 		</div>

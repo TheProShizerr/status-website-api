@@ -11,6 +11,15 @@ Status Monitor to aplikacja do monitorowania dostępności stron internetowych i
 - **🖥️ Monitorowanie zdarzeń** - Jeśli jakiś system przestanie działac zostaje odnotowany incydent i pokazuje go na stronie, pokazuje ostatnie 5dni.
 - **❌ Automatyczne kasowanie danych** - Jeśli dane ze statusami są starsze niż 2 dni lub jest więcej niz 5 incydentów (1 dzien = 1 incydent) są automatycznie kasowane z bazy danych.
 
+## 🔋 Statusy incydentów
+
+| Status           | Opis                                                | Warunek czasowy           |
+| ---------------- | --------------------------------------------------- | ------------------------- |
+| **CHWILOWE**     | Endpoint nie działa przez krótki czas.              | Nie działa przez 5 minut  |
+| **TYMCZASOWE**   | Endpoint nie działa przez dłuższy okres.            | Nie działa przez 10 minut |
+| **POTWIERDZONE** | Długotrwały brak działania endpointu.               | Nie działa przez 15 minut |
+| **ROZWIĄZANE**   | Endpoint ponownie działa po okresie niedostępności. | Zaczyna działać ponownie  |
+
 ---
 
 ## 🖼️ Podgląd

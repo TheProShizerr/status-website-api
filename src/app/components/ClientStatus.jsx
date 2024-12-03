@@ -150,8 +150,17 @@ export default function Home({ result, systemStatus }) {
 													))}
 											</div>
 											<div className="flex justify-between mt-1">
-												<p className="text-color-text text-sm">{getTimeDifference(item.statusList[0].updateAt)}</p>
-												<p className="text-color-text text-sm">{getTimeDifference(item.statusList[39].updateAt)}</p>
+												<p className="text-color-text text-sm">
+													{item.statusList[39]?.updateAt
+														? getTimeDifference(item.statusList[0].updateAt)
+														: "Brak danych"}
+												</p>
+
+												<p className="text-color-text text-sm">
+													{item.statusList[39]?.updateAt
+														? getTimeDifference(item.statusList[39].updateAt)
+														: "Brak danych"}
+												</p>
 											</div>
 										</div>
 									</div>
@@ -207,8 +216,17 @@ export default function Home({ result, systemStatus }) {
 													))}
 											</div>
 											<div className="flex justify-between mt-1">
-												<p className="text-color-text text-sm">{getTimeDifference(item.statusList[0].updateAt)}</p>
-												<p className="text-color-text text-sm">{getTimeDifference(item.statusList[39].updateAt)}</p>
+												<p className="text-color-text text-sm">
+													{item.statusList[39]?.updateAt
+														? getTimeDifference(item.statusList[0].updateAt)
+														: "Brak danych"}
+												</p>
+
+												<p className="text-color-text text-sm">
+													{item.statusList[39]?.updateAt
+														? getTimeDifference(item.statusList[39].updateAt)
+														: "Brak danych"}
+												</p>
 											</div>
 										</div>
 									</div>

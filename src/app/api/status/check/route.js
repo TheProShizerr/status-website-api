@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma"
+import { addIncident, changeStatusIncident } from "@/services/incidents"
 import axios from "axios"
 
 const website = [
@@ -59,31 +60,6 @@ const website = [
 const data = {}
 
 export async function GET(request) {
-	const addIncident = async (site, code, status) => {
-		const todayDate = new Intl.DateTimeFormat("pl-PL", {
-			month: "2-digit",
-			year: "numeric",
-			day: "2-digit",
-		}).format(new Date())
-
-		const incidentId = await prisma.dateIncidents.findMany({
-			where: { date: todayDate },
-		})
-
-		if (!incidentId) await prisma.dateIncidents.create({ data: { date: todayDate } })
-
-		await prisma.incidentsList.create({
-			data: {
-				url: site,
-				type: site.includes("api") ? "api" : "web",
-				status: status,
-				description: code,
-				date: new Date(),
-				dateIncidentId: incidentId[0].id,
-			},
-		})
-	}
-
 	for (const site of website) {
 		try {
 			const dateBefore = new Date()
@@ -98,6 +74,8 @@ export async function GET(request) {
 			const dateAfter = new Date()
 
 			const dateSum = dateAfter.getTime() - dateBefore.getTime()
+
+			changeStatusIncident(site.url)
 
 			data.url = site.url
 			data.type = site.url.includes("api") ? "api" : "web"

@@ -25,11 +25,13 @@ model DateIncidents {
 
 model IncidentsList {
   id             Int           @id @default(autoincrement())
-  url            String
+  url            String @unique
   type           String
   status         String
   description    String
   date           DateTime      @default(now())
+  errStatus      String?
+  errStatusUpdate String?
   dateIncidentId Int
   dateIncident   DateIncidents @relation(fields: [dateIncidentId], references: [id], onDelete: Cascade)
 }
