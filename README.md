@@ -20,8 +20,6 @@ Status Monitor to aplikacja do monitorowania dostępności stron internetowych i
 | **POTWIERDZONE** | Długotrwały brak działania endpointu.               | Nie działa przez 15 minut |
 | **ROZWIĄZANE**   | Endpoint ponownie działa po okresie niedostępności. | Zaczyna działać ponownie  |
 
----
-
 ## 🖼️ Podgląd
 
 ![Podgląd aplikacji](./public/api-status.png)
@@ -34,7 +32,7 @@ Status Monitor to aplikacja do monitorowania dostępności stron internetowych i
    ```bash
    git clone https://github.com/TheProShizerr/status-website-api
    ```
-2. Ręcznie trzeba skonfigurować cron joby, co ile maja scanować się szablony, usuwać dane itp.   
+2. Ręcznie trzeba skonfigurować cron joby, co ile maja scanować się szablony, usuwać dane itp.
 
 ## 🌐 Link do strony
 
