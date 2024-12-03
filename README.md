@@ -34,6 +34,7 @@ Status Monitor to aplikacja do monitorowania dostępności stron internetowych i
    ```bash
    git clone https://github.com/TheProShizerr/status-website-api
    ```
+2. Ręcznie trzeba skonfigurować cron joby, co ile maja scanować się szablony, usuwać dane itp.   
 
 ## 🌐 Link do strony
 
