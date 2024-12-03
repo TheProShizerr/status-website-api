@@ -25,7 +25,7 @@ model DateIncidents {
 
 model IncidentsList {
   id             Int           @id @default(autoincrement())
-  url            String @unique
+  url            String
   type           String
   status         String
   description    String

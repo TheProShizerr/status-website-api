@@ -29,8 +29,10 @@ export const addIncident = async (site, code, status) => {
 		})
 
 		if (incidentId.length > 0) {
-			incidentId.map(async item => {
-				if (item.errStatus === "rozwiązany") return
+			for (const item of incidentId) {
+				if (item.errStatus === "rozwiązany") {
+					continue
+				}
 
 				await prisma.incidentsList.update({
 					where: { id: item.id },
@@ -39,8 +41,9 @@ export const addIncident = async (site, code, status) => {
 						errStatusUpdate: formatedData(new Date()),
 					},
 				})
+
 				return
-			})
+			}
 		}
 
 		if (incidentId.length == 0 || incidentId[0].errStatus === "rozwiązany") {
