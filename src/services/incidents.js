@@ -2,13 +2,17 @@ import prisma from "@/lib/prisma"
 import { formatedData } from "@/utils/formatedData"
 import { errStatus } from "@/utils/status"
 
-const todayDate = new Intl.DateTimeFormat("pl-PL", {
-	month: "2-digit",
-	year: "numeric",
-	day: "2-digit",
-}).format(new Date())
+const getTodayDate = () => {
+	return new Intl.DateTimeFormat("pl-PL", {
+		month: "2-digit",
+		year: "numeric",
+		day: "2-digit",
+	}).format(new Date())
+}
 
 export const addIncident = async (site, code, status) => {
+	const todayDate = getTodayDate()
+
 	try {
 		let incidentId = await prisma.incidentsList.findMany({
 			where: {
@@ -73,6 +77,8 @@ export const addIncident = async (site, code, status) => {
 }
 
 export const changeStatusIncident = async site => {
+	const todayDate = getTodayDate()
+
 	try {
 		const checkStatusIncident = await prisma.incidentsList.findMany({
 			where: {
